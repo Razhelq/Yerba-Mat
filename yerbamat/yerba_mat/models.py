@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -14,9 +15,24 @@ class Product(models.Model):
     description = models.CharField(max_length=1024, blank=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     amount = models.IntegerField(default=0)
+    rate = models.FloatField
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     picture = models.ImageField(
         verbose_name='pictures',
         upload_to='pictures/',
         null=True,
     )
+
+
+class Basket(models.Model):
+    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Product)
+    items = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
+
+class Review(models.Model):
+    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    content = models.CharField(max_length=1024)
+    creation_date = models.DateTimeField(auto_now=True)
