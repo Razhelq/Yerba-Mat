@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Add Product</p>
+                <div class="list-group">
+                    {% for category in categories %}
+}                   {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    {% if form %}
+                    <form action="{% url 'product-add' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Add</button>
+                    </form>
+                    {% else %}
+                        {{ error }}
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

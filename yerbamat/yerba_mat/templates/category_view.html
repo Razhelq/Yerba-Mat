@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    {% if category.id == 1 %}
+                        {% for product in products %}
+                        <div class="caption-full">
+                            <h4><a href="{% url 'product-details' product.id %}">{{ product.name }}</a>
+                            <p>{{ product.description }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="caption-full">
+                            <h4>Kategoria nei gotowa</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+{% endblock %}

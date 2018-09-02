@@ -13,9 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    url(r'^index/$', IndexView.as_view(), name='index'),
+    url(r'^category_view/(?P<id>(\d)+)/$', CategoryView.as_view(), name='category-view'),
+    url(r'^category_add/$', CategoryAddView.as_view(), name='category-add'),
+    url(r'^product_add/$', ProductAddView.as_view(), name='product-add'),
+    url(r'^product_details/(?P<id>(\d)+)/$', ProductDetailsView.as_view(), name='product-details')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
