@@ -1,7 +1,9 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 from yerba_mat.models import Category, Product
-from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2
+from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm
 
 
 class IndexView(View):
@@ -60,3 +62,40 @@ class ProductDetailsView(View):
         categories = Category.objects.all()
         product = Product.objects.get(id=id)
         return render(request, 'product_details.html', {'product': product, 'categories': categories})
+
+
+class BasketView(View):
+    pass
+
+
+class LoginView(View):
+
+    def get(self, request):
+        if not request.user.is_authenticated:
+            form = LoginForm()
+            return render(request, 'login.html', {'form': form})
+        return redirect('index')
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user:
+                login(request, user)
+                return redirect('index')
+        return redirect('index')
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            logout(request)
+            return redirect('index')
+        return redirect('login')
+
+class ClientCreateView(View):
+
+    def get(self, request):
+        pass
+

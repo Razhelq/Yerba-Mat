@@ -24,15 +24,22 @@ class Product(models.Model):
     )
 
 
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    street = models.CharField(max_length=128, blank=True)
+    city = models.CharField(max_length=128, blank=True)
+    phone = models.IntegerField(default=0)
+
+
 class Basket(models.Model):
-    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    person = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ManyToManyField(Product)
     items = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
 
 
 class Review(models.Model):
-    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    person = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     content = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now=True)
