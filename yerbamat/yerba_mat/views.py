@@ -2,8 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
-from yerba_mat.models import Category, Product
-from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm
+from yerba_mat.models import Category, Product, Client
+from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm, ClientCreateForm
 
 
 class IndexView(View):
@@ -94,8 +94,30 @@ class LogoutView(View):
             return redirect('index')
         return redirect('login')
 
+
 class ClientCreateView(View):
 
     def get(self, request):
-        pass
+        form = ClientCreateForm()
+        return render(request, 'client_create.html', {'form': form})
+
+    def post(self, request):
+        form = ClientCreateForm(request.POST)
+        if form.is_valid():
+            User.objects.create_user(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password']
+            )
+            Client.objects.create(
+                user=User.objects.get(username=form.cleaned_data['username']),
+                name=form.cleaned_data['name'],
+                lastname=form.cleaned_data['lastname'],
+                street=form.cleaned_data['street'],
+                post=form.cleaned_data['post'],
+                city=form.cleaned_data['city'],
+                phone=form.cleaned_data['phone']
+            )
+            return redirect('login')
+        return redirect('client-create')
 

@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'yerbamat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'yerba',
+        'NAME': 'yerba_mat',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'USER': 'postgres',
         'PASSWORD': 'coderslab',

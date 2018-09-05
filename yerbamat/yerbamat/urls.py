@@ -18,13 +18,18 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView
+from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView, BasketView
+from yerba_mat.views import LoginView, LogoutView, ClientCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^index/$', IndexView.as_view(), name='index'),
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^category_view/(?P<id>(\d)+)/$', CategoryView.as_view(), name='category-view'),
     url(r'^category_add/$', CategoryAddView.as_view(), name='category-add'),
     url(r'^product_add/$', ProductAddView.as_view(), name='product-add'),
-    url(r'^product_details/(?P<id>(\d)+)/$', ProductDetailsView.as_view(), name='product-details')
+    url(r'^product_details/(?P<id>(\d)+)/$', ProductDetailsView.as_view(), name='product-details'),
+    url(r'^basket/$', BasketView.as_view(), name='basket'),
+    url(r'^client_create/$', ClientCreateView.as_view(), name='client-create')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

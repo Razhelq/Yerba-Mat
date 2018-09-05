@@ -26,7 +26,10 @@ class Product(models.Model):
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=128, blank=True)
+    lastname = models.CharField(max_length=128, blank=True)
     street = models.CharField(max_length=128, blank=True)
+    post = models.CharField(max_length=128, blank=True)
     city = models.CharField(max_length=128, blank=True)
     phone = models.IntegerField(default=0)
 
