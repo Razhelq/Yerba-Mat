@@ -10,6 +10,13 @@
                         <h4 class="pull-right">$24.99</h4>
                         <h4><a href="#">{{ product.name }}</a>
                         </h4>
+                        <h4 class="pull-right">
+                            <form action="{% url 'add-product-to-basket' product.id %}" method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit">Dodaj do koszyka</button>
+                            </form>
+                        </h4>
                         <p><img src="{{ product.picture.url }}"</p>
                         <p>{{ product.description }}</p>
                         <p>{{ product.amount }}</p>

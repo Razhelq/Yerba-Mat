@@ -42,3 +42,9 @@ class ClientCreateForm(forms.Form):
     post = forms.CharField(label="Kod pocztowy", max_length=128)
     city = forms.CharField(label="Miasto", max_length=128)
     phone = forms.IntegerField(label="Telefon")
+
+
+class BasketForm(forms.Form):
+    items = forms.IntegerField(label="Ilość")
+
+

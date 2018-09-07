@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Twój koszyk</p>
+                <div class="list-group">
+                    {% for category in categories %}
+}                   {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    {{ basket.person.name }}
+                    {{ basket.total_price }}
+                    <hr>
+                    <form action="{% url 'modify-inside-basket' %}" method="POST">
+                        {% csrf_token %}
+                        {% for inside_basket in inside_baskets %}
+                            <label>{{ inside_basket.product.name }}</label>
+                            <input type="number" name="{{ inside_basket.product.name }}" value="{{ inside_basket.items }}" placeholder="{{ inside_basket.items }}">
+                            <input type="text" name="{{ inside_basket.id }}" value="{{ inside_basket.id }}" hidden>
+                        <br>
+                        {% endfor %}
+                        <button type="submit">Aktualizuj</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

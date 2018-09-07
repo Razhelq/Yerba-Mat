@@ -9,6 +9,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
 
 class Product(models.Model):
     name = models.CharField(max_length=128)
@@ -33,12 +37,20 @@ class Client(models.Model):
     city = models.CharField(max_length=128, blank=True)
     phone = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.name
+
 
 class Basket(models.Model):
-    person = models.ForeignKey(Client, on_delete=models.CASCADE)
-    product = models.ManyToManyField(Product)
-    items = models.IntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    person = models.OneToOneField(Client, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Product, through="InsideBasket")
+    total_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+
+
+class InsideBasket(models.Model):
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    items = models.IntegerField(default=0)
 
 
 class Review(models.Model):
