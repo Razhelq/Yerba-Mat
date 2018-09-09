@@ -19,7 +19,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView, BasketView
-from yerba_mat.views import LoginView, LogoutView, ClientCreateView
+from yerba_mat.views import LoginView, LogoutView, ClientCreateView, AddProductToBasketView, ModifyInsideBasketView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +32,7 @@ urlpatterns = [
     url(r'^product_add/$', ProductAddView.as_view(), name='product-add'),
     url(r'^product_details/(?P<id>(\d)+)/$', ProductDetailsView.as_view(), name='product-details'),
     url(r'^basket/$', BasketView.as_view(), name='basket'),
-    url(r'^client_create/$', ClientCreateView.as_view(), name='client-create')
+    url(r'^client_create/$', ClientCreateView.as_view(), name='client-create'),
+    url(r'^add_product_to_basket/(?P<id>(\d)+)/$', AddProductToBasketView.as_view(), name='add-product-to-basket'),
+    url(r'^modify_inside_basket/$', ModifyInsideBasketView.as_view(), name='modify-inside-basket')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

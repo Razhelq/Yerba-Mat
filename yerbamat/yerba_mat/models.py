@@ -58,3 +58,18 @@ class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     content = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now=True)
+
+
+class Order(models.Model):
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    person = models.ForeignKey(Client, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now=True)
+    paid = models.BooleanField(default=False)
+    sent = models.BooleanFIeld(default=False)
+    name = models.CharField(max_length=128, blank=True)
+    lastname = models.CharField(max_length=128, blank=True)
+    street = models.CharField(max_length=128, blank=True)
+    post = models.CharField(max_length=128, blank=True)
+    city = models.CharField(max_length=128, blank=True)
+    phone = models.IntegerField(default=0)
+

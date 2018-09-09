@@ -48,3 +48,9 @@ class BasketForm(forms.Form):
     items = forms.IntegerField(label="Ilość")
 
 
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        exclude = exclude = ('user', )
+
+

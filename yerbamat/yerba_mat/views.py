@@ -3,8 +3,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
-from yerba_mat.models import Category, Product, Client, Basket, InsideBasket
-from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm, ClientCreateForm, BasketForm
+from yerba_mat.models import Category, Product, Client, Basket, InsideBasket, Order
+from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm, ClientCreateForm, BasketForm, OrderForm
 
 
 class IndexView(View):
@@ -192,3 +192,20 @@ class ModifyInsideBasketView(View):
             basket.total_price += inside.items * inside.product.price
         basket.save()
         return redirect('basket')
+
+
+class OrderCreateView(View):
+
+    def get(self, request):
+        form = OrderForm()
+        return render(request, 'order_form.html', {'form': form})
+
+    def post(self, request):
+        form = OrderForm(request.POST)
+        person = Client.objects.get(user__username=request.user)
+        basket = Basket.objects.get(person=person)
+        Order.objects.create(
+            basket=basket,
+            person=person
+        )
+
