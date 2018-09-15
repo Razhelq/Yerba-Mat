@@ -1,9 +1,32 @@
 .thumbnail img {
-    max-width: 300px;
+    max-width: 200px;
 }
 
 .thumbnail a>img {
     display: block;
-    max-width: 300px;
+    max-width: 200px;
     height: auto;
+}
+
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #f8fff7;
+}
+
+a.list-group-item.active {
+    background-color: #360;
+    border-color: #fff;
+}
+
+nav.navbar.navbar-inverse.navbar-fixed-top {
+    background-color: #000a00;
+}
+
+a.list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #000a00;
 }

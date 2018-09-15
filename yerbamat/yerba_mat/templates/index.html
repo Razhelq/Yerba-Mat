@@ -59,7 +59,9 @@
                     <li>
                         <a href="#">Kontakt</a>
                     </li>
-
+                    <li>
+                        <a href="#">&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    </li>
                     {% if user.is_authenticated %}
                         <li>
                             <a href="{% url 'logout' %}">Log out</a>
@@ -85,25 +87,37 @@
             <div class="row">
 
                 <div class="col-md-3">
+                    <p><br></p>
                     <p class="lead">Kategorie</p>
                     <div class="list-group">
                         {% for cat in cats %}
                             <a href="{% url 'category-view' cat.id %}" class="list-group-item active">{{ cat.name }}</a>
                         {% endfor %}
                         {% if perms.yerba_mat.change_category %}
+                            <a href="#" class="list-group-item active"><br></a>
                             <a href="{% url 'category-add' %}" class="list-group-item active">Dodaj kategorie</a>
                             <a href="{% url 'category-del' %}" class="list-group-item active">Usuń kategorie</a>
+                            <a href="{% url 'category-mod' %}" class="list-group-item active">Modyfikuj kategorie</a>
                         {% endif %}
                         {% if perms.yerba_mat.change_product %}
                             <a href="{% url 'product-add' %}" class="list-group-item active">Dodaj produkt</a>
                             <a href="{% url 'product-del' %}" class="list-group-item active">Usuń product</a>
+                            <a href="{% url 'product-mod' %}" class="list-group-item active">Modyfikuj produkt</a>
                         {% endif %}
                     </div>
                 </div>
 
                 {% block content %}
-                    <br><br><br><br><br>
-                <center>Witaj w sklepie!</center>
+                    <br><br><br>
+                    <h3><strong><center>Witaj w sklepie!</center></strong></h3>
+                    <br><br>
+                    <div>
+                        Legenda opowiadająca o powstaniu Yerba Mate głosi, że Boginie Księżyca i Chmury przybyły zwiedzić Ziemię. Znalazły tam jaguara, który chciał je zaatakować. Zostały jednak uratowane przez starca, który w podzięce dostał nowy rodzaj rośliny, z jakiej można przygotować „napar przyjaźni”. Indiańska nazwa tego naparu to caá.
+
+Indianie z plemienia Guarani początkowo pili yerba mate bez bombilli cedząc napar przez zęby. Pierwsze wynalezione przez nich bombille były trzcinowe lub drewniane. Powszechnie także żuto liście yerby co również odpędzało zmęczenie i co ważne u Indian mających nieraz problemy z żywnością, łagodziło uczucie głodu.
+
+Yerba jako napój przyjaźni wiązała się z rytuałem. Celebrował go gospodarz zwany matero. Zaparzał on jedno naczynie yerby i częstował nim siedzących w kręgu zebranych według ich dostojeństwa. Słusznie porównuje się ten rytuał do fajki pokoju Indian Ameryki Północnej.
+                    </div>
                 {% endblock %}
 
             </div>

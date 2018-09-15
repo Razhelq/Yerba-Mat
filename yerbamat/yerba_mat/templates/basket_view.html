@@ -16,13 +16,14 @@
             <div class="col-md-9">
 
                 <div class="thumbnail">
-                    <h2><strong>Koszt zamówienia: {{ basket.total_price }}</strong></h2></p>
+                    <h4><strong>Koszt zamówienia: {{ basket.total_price }} zł</strong></h4></p>
+                    <p><h6>+ koszty wysyłki</h6></p>
                     <hr>
                     <p><h4><strong>Produkty:</strong></h4></p>
                     <form action="{% url 'modify-inside-basket' %}" method="POST">
                         {% csrf_token %}
                         {% for inside_basket in inside_baskets %}
-                            <label><img src="{{ inside_basket.product.picture.url }}" class="img-fluid">{{ inside_basket.product.name }}</label>
+                            <label><img src="{{ inside_basket.product.picture.url }}" class="img-fluid">{{ inside_basket.product.name }} - {{ inside_basket.product.price }} zł - Ilość</label>
                             <input type="number" name="{{ inside_basket.product.name }}" value="{{ inside_basket.items }}" placeholder="{{ inside_basket.items }}">
                             <input type="text" name="{{ inside_basket.id }}" value="{{ inside_basket.id }}" hidden>
                         <br>

@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    last_display = ['name', 'description']
+    last_display = ['id', 'name', 'description']
 
 
 @admin.register(Basket)

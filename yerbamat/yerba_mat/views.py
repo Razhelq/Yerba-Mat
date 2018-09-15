@@ -17,7 +17,7 @@ class CategoryView(View):
 
     def get(self, request, id):
         category = Category.objects.get(id=id)
-        products = Product.objects.all()
+        products = Product.objects.filter(category__id=id)
         return render(request, 'category_view.html', {'category': category, 'products': products})
 
 
@@ -155,13 +155,13 @@ class AddProductToBasketView(View):
                     basket.save()
                     return redirect('basket')
                 except ObjectDoesNotExist:
-                    basket = Basket.objects.create(
-                        person=Client.objects.get(user__username=request.user),
-                        total_price=0
+                    Basket.objects.create(
+                        person=Client.objects.get(user__username=request.user)
                     )
                     try:
                         inside_basket = InsideBasket.objects.get(product__id=id)
                         inside_basket.items = form.cleaned_data['items']
+                        print(inside_basket.items)
                         inside_basket.save()
                     except ObjectDoesNotExist:
                         InsideBasket.objects.create(
@@ -169,9 +169,11 @@ class AddProductToBasketView(View):
                             product=Product.objects.get(id=id),
                             items=form.cleaned_data['items']
                         )
+                    basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
                     inside_baskets = InsideBasket.objects.filter(basket=basket)
                     basket.total_price = 0
                     for inside in inside_baskets:
+                        print(inside.items)
                         basket.total_price += inside.items * inside.product.price
                     basket.save()
                     return redirect('basket')
@@ -233,11 +235,40 @@ class OrderCreateView(View):
 
 
 class CategoryDeleteView(View):
-    pass
+
+    def get(self, request):
+        return redirect('index')
+
+    def post(self, request):
+        return redirect('index')
 
 
 class ProductDeleteView(View):
-    pass
+
+    def get(self, request):
+        return redirect('index')
+
+    def post(self, request):
+        return redirect('index')
+
+
+
+class CategoryModifyView(View):
+
+    def get(self, request):
+        return redirect('index')
+
+    def post(self, request):
+        return redirect('index')
+
+
+class ProductModifyView(View):
+
+    def get(self, request):
+        return redirect('index')
+
+    def post(self, request):
+        return redirect('index')
 
 
 class OrderToSendView(View):
@@ -246,6 +277,5 @@ class OrderToSendView(View):
         return render(request, 'order_to_send.html')
 
     def post(self, request):
-        pass
-
+        return redirect('index')
 
