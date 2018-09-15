@@ -46,11 +46,17 @@ class Basket(models.Model):
     product = models.ManyToManyField(Product, through="InsideBasket")
     total_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
+    def __str__(self):
+        return self.person.name
+
 
 class InsideBasket(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     items = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.basket.person.name
 
 
 class Review(models.Model):
@@ -59,13 +65,16 @@ class Review(models.Model):
     content = models.CharField(max_length=1024)
     creation_date = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.person.name
+
 
 class Order(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     person = models.ForeignKey(Client, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    sent = models.BooleanFIeld(default=False)
+    sent = models.BooleanField(default=False)
     name = models.CharField(max_length=128, blank=True)
     lastname = models.CharField(max_length=128, blank=True)
     street = models.CharField(max_length=128, blank=True)
@@ -73,3 +82,5 @@ class Order(models.Model):
     city = models.CharField(max_length=128, blank=True)
     phone = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.person.name

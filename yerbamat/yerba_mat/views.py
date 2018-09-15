@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from yerba_mat.models import Category, Product, Client, Basket, InsideBasket, Order
 from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm, ClientCreateForm, BasketForm, OrderForm
@@ -59,7 +59,6 @@ class ProductView(View):
 class ProductDetailsView(View):
 
     def get(self, request, id):
-        print(request.user.username)
         form = BasketForm()
         product = Product.objects.get(id=id)
         return render(request, 'product_details.html', {'product': product, 'form': form})
@@ -68,12 +67,14 @@ class ProductDetailsView(View):
 class BasketView(View):
 
     def get(self, request):
-        try:
-            basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
-            inside_baskets = InsideBasket.objects.filter(basket=basket)
-            return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
-        except ObjectDoesNotExist:
-            return render(request, 'basket_view.html')
+        if request.user.is_authenticated:
+            try:
+                basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
+                inside_baskets = InsideBasket.objects.filter(basket=basket)
+                return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
+            except ObjectDoesNotExist:
+                return render(request, 'basket_view.html')
+        return redirect('login')
 
 class LoginView(View):
 
@@ -147,7 +148,7 @@ class AddProductToBasketView(View):
                             product=Product.objects.get(id=id),
                             items=form.cleaned_data['items']
                         )
-                    inside_baskets = InsideBasket.objects.filter(product__id=id)
+                    inside_baskets = InsideBasket.objects.filter(basket=basket)
                     basket.total_price = 0
                     for inside in inside_baskets:
                         basket.total_price += inside.items * inside.product.price
@@ -168,7 +169,7 @@ class AddProductToBasketView(View):
                             product=Product.objects.get(id=id),
                             items=form.cleaned_data['items']
                         )
-                    inside_baskets = InsideBasket.objects.filter(product__id=id)
+                    inside_baskets = InsideBasket.objects.filter(basket=basket)
                     basket.total_price = 0
                     for inside in inside_baskets:
                         basket.total_price += inside.items * inside.product.price
@@ -197,15 +198,54 @@ class ModifyInsideBasketView(View):
 class OrderCreateView(View):
 
     def get(self, request):
-        form = OrderForm()
+        form = OrderForm(instance=get_object_or_404(Client, id=request.user.id))
         return render(request, 'order_form.html', {'form': form})
 
     def post(self, request):
-        form = OrderForm(request.POST)
-        person = Client.objects.get(user__username=request.user)
-        basket = Basket.objects.get(person=person)
-        Order.objects.create(
-            basket=basket,
-            person=person
-        )
+        form = OrderForm(request.POST, instance=get_object_or_404(Client, id=request.user.id))
+        if form.is_valid():
+            person = Client.objects.get(user__username=request.user)
+            basket = Basket.objects.get(person=person)
+            try:
+                order = Order.objects.get(person=person)
+                order.basket = basket
+                order.person = person
+                order.name = form.cleaned_data['name']
+                order.lastname = form.cleaned_data['lastname']
+                order.street = form.cleaned_data['street']
+                order.post = form.cleaned_data['post']
+                order.city = form.cleaned_data['city']
+                order.phone = form.cleaned_data['phone']
+                order.save()
+            except ObjectDoesNotExist:
+                Order.objects.create(
+                    basket=basket,
+                    person=person,
+                    name=form.cleaned_data['name'],
+                    lastname=form.cleaned_data['lastname'],
+                    street=form.cleaned_data['street'],
+                    post=form.cleaned_data['post'],
+                    city=form.cleaned_data['city'],
+                    phone=form.cleaned_data['phone']
+                )
+            return redirect('order-to-send')
+        return redirect('basket')
+
+
+class CategoryDeleteView(View):
+    pass
+
+
+class ProductDeleteView(View):
+    pass
+
+
+class OrderToSendView(View):
+
+    def get(self, request):
+        return render(request, 'order_to_send.html')
+
+    def post(self, request):
+        pass
+
 

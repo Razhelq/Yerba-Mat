@@ -1,25 +1,39 @@
 {% extends "index.html" %}
 
 {% block content %}
+<div class="container">
 
+        <div class="row">
 
             <div class="col-md-9">
 
                 <div class="thumbnail">
                     {% if category.id == 1 %}
                         {% for product in products %}
-                        <div class="caption-full">
-                            <h4><a href="{% url 'product-details' product.id %}">{{ product.name }}</a>
-                            <p>{{ product.description }}</p>
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+                          <div class="card h-100">
+                            <a href="{% url 'product-details' product.id %}"><img class="card-img-top" src="{{ product.picture.url }}"></a>
+                            <div class="card-body">
+                              <h4 class="card-title">
+                                <a href="{% url 'product-details' product.id %}">{{ product.name }}</a>
+                              </h4>
+                              <h5>{{ product.price }}</h5>
+                            </div>
+                            <div class="card-footer">
+                              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            </div>
+                            </div>
                         </div>
                         {% endfor %}
                     {% else %}
                         <div class="caption-full">
-                            <h4>Kategoria nei gotowa</a>
+                            <h4>Kategoria nie gotowa</a>
                         </div>
                     {% endif %}
                 </div>
-
             </div>
+        </div>
+</div>
 
 {% endblock %}

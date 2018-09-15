@@ -51,6 +51,4 @@ class BasketForm(forms.Form):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Client
-        exclude = exclude = ('user', )
-
-
+        exclude = ('user', )

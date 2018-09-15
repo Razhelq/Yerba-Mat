@@ -7,7 +7,7 @@
 
                 <div class="thumbnail">
                     <div class="caption-full">
-                        <h4 class="pull-right">$24.99</h4>
+                        <h4 class="pull-right">Cena: {{ product.price }} zł</h4>
                         <h4><a href="#">{{ product.name }}</a>
                         </h4>
                         <h4 class="pull-right">
@@ -17,10 +17,8 @@
                                 <button type="submit">Dodaj do koszyka</button>
                             </form>
                         </h4>
-                        <p><img src="{{ product.picture.url }}"</p>
+                        <p><img src="{{ product.picture.url }}" class="img-fluid"></p>
                         <p>{{ product.description }}</p>
-                        <p>{{ product.amount }}</p>
-                        <p>{{ product.category.name }}</p>
                     </div>
                     <div class="ratings">
                         <p class="pull-right">3 reviews</p>

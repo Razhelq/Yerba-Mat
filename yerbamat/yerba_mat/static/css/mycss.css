@@ -1,0 +1,9 @@
+.thumbnail img {
+    max-width: 300px;
+}
+
+.thumbnail a>img {
+    display: block;
+    max-width: 300px;
+    height: auto;
+}

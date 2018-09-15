@@ -18,6 +18,8 @@
 
     <!-- Custom CSS -->
     <link href="{% static 'css/shop-item.css' %}" rel="stylesheet">
+    <link href="{% static 'css/shop-homepage.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mycss.css' %}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,32 +42,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Yerba-Mat</a>
+                <a class="navbar-brand" href="{% url 'index' %}">Yerba-Mat</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">O nas</a>
-                    </li>
-                    <li>
                         <a href="{% url 'index' %}">Sklep</a>
-                    </li>
-                    <li>
-                        <a href="#">Kontakt</a>
                     </li>
                     <li>
                         <a href="{% url 'basket' %}">Koszyk</a>
                     </li>
                     <li>
-                        <a href="{% url 'category-add' %}">Dodaj kategorie</a>
+                        <a href="#">O nas</a>
                     </li>
                     <li>
-                        <a href="{% url 'product-add' %}">Dodaj produkt</a>
+                        <a href="#">Kontakt</a>
                     </li>
-                    <li>
-                        <a href="{% url 'client-create' %}">Stwórz konto</a>
-                    </li>
+
                     {% if user.is_authenticated %}
                         <li>
                             <a href="{% url 'logout' %}">Log out</a>
@@ -75,6 +69,9 @@
                             <a href="{% url 'login' %}">Log in</a>
                         </li>
                     {% endif %}
+                    <li>
+                        <a href="{% url 'client-create' %}">Stwórz konto</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -93,11 +90,20 @@
                         {% for cat in cats %}
                             <a href="{% url 'category-view' cat.id %}" class="list-group-item active">{{ cat.name }}</a>
                         {% endfor %}
+                        {% if perms.yerba_mat.change_category %}
+                            <a href="{% url 'category-add' %}" class="list-group-item active">Dodaj kategorie</a>
+                            <a href="{% url 'category-del' %}" class="list-group-item active">Usuń kategorie</a>
+                        {% endif %}
+                        {% if perms.yerba_mat.change_product %}
+                            <a href="{% url 'product-add' %}" class="list-group-item active">Dodaj produkt</a>
+                            <a href="{% url 'product-del' %}" class="list-group-item active">Usuń product</a>
+                        {% endif %}
                     </div>
                 </div>
 
                 {% block content %}
-
+                    <br><br><br><br><br>
+                <center>Witaj w sklepie!</center>
                 {% endblock %}
 
             </div>

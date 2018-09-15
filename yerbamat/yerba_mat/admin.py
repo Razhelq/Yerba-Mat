@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Product, Client, Basket, InsideBasket, Category
+from .models import Product, Client, Basket, InsideBasket, Category, Order
 
 
 @admin.register(Product)
@@ -23,6 +23,11 @@ class BasketAdmin(admin.ModelAdmin):
 @admin.register(InsideBasket)
 class InsideBasket(admin.ModelAdmin):
     last_display = ['basket', 'product', 'items']
+
+
+@admin.register(Order)
+class Order(admin.ModelAdmin):
+    last_display = ['basket', 'person', 'creation_date', 'paid', 'sent', 'name', 'last_name', 'street', 'post', 'city', 'phone']
 
 
 class ClientInline(admin.StackedInline):
