@@ -30,6 +30,9 @@ class ProductForm2(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        widgets = {
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
 
 
 class ClientCreateForm(forms.Form):

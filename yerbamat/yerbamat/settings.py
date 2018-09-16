@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'yerba_mat'
+    'rest_framework',
+    'yerba_mat',
+    'api'
 ]
 
 MIDDLEWARE = [

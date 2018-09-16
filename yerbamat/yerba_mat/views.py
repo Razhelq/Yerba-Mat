@@ -139,10 +139,12 @@ class AddProductToBasketView(View):
                 try:
                     basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
                     try:
-                        inside_basket = InsideBasket.objects.get(product__id=id)
+                        inside_basket = InsideBasket.objects.filter(basket=basket).get(product__id=id)
                         inside_basket.items = form.cleaned_data['items']
+                        print(inside_basket.items)
                         inside_basket.save()
                     except ObjectDoesNotExist:
+                        print(basket)
                         InsideBasket.objects.create(
                             basket=basket,
                             product=Product.objects.get(id=id),
@@ -200,11 +202,11 @@ class ModifyInsideBasketView(View):
 class OrderCreateView(View):
 
     def get(self, request):
-        form = OrderForm(instance=get_object_or_404(Client, id=request.user.id))
+        form = OrderForm(instance=get_object_or_404(Client, user=request.user))
         return render(request, 'order_form.html', {'form': form})
 
     def post(self, request):
-        form = OrderForm(request.POST, instance=get_object_or_404(Client, id=request.user.id))
+        form = OrderForm(request.POST, instance=get_object_or_404(Client, user=request.user))
         if form.is_valid():
             person = Client.objects.get(user__username=request.user)
             basket = Basket.objects.get(person=person)

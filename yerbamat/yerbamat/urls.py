@@ -7,6 +7,7 @@ from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAdd
 from yerba_mat.views import LoginView, LogoutView, ClientCreateView, AddProductToBasketView, ModifyInsideBasketView
 from yerba_mat.views import OrderCreateView, OrderToSendView, CategoryDeleteView, ProductDeleteView
 from yerba_mat.views import CategoryModifyView, ProductModifyView
+from api.views import ProductView, ProductListView, WrongEndpointView
 
 
 urlpatterns = [
@@ -27,5 +28,8 @@ urlpatterns = [
     url(r'^category_delete/$', CategoryDeleteView.as_view(), name='category-del'),
     url(r'^product_delete/$', ProductDeleteView.as_view(), name='product-del'),
     url(r'^category_modify/$', CategoryModifyView.as_view(), name='category-mod'),
-    url(r'^product_modify/$', ProductModifyView.as_view(), name='product-mod')
+    url(r'^product_modify/$', ProductModifyView.as_view(), name='product-mod'),
+    url(r'^api/product/$', ProductListView.as_view(), name='product-list'),
+    url(r'^api/product/(?P<id>[0-9]+)/$', ProductView.as_view(), name='product'),
+    url(r'^api/.*', WrongEndpointView.as_view(), name='wrong-endpoint'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
