@@ -236,6 +236,17 @@ class OrderCreateView(View):
         return redirect('basket')
 
 
+# TODO
+
+class OrderToSendView(View):
+
+    def get(self, request):
+        return render(request, 'order_to_send.html')
+
+    def post(self, request):
+        return redirect('index')
+
+
 class CategoryDeleteView(View):
 
     def get(self, request):
@@ -252,7 +263,6 @@ class ProductDeleteView(View):
 
     def post(self, request):
         return redirect('index')
-
 
 
 class CategoryModifyView(View):
@@ -272,12 +282,4 @@ class ProductModifyView(View):
     def post(self, request):
         return redirect('index')
 
-
-class OrderToSendView(View):
-
-    def get(self, request):
-        return render(request, 'order_to_send.html')
-
-    def post(self, request):
-        return redirect('index')
 
