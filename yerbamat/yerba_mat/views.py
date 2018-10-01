@@ -141,10 +141,8 @@ class AddProductToBasketView(View):
                     try:
                         inside_basket = InsideBasket.objects.filter(basket=basket).get(product__id=id)
                         inside_basket.items = form.cleaned_data['items']
-                        print(inside_basket.items)
                         inside_basket.save()
                     except ObjectDoesNotExist:
-                        print(basket)
                         InsideBasket.objects.create(
                             basket=basket,
                             product=Product.objects.get(id=id),
@@ -163,7 +161,6 @@ class AddProductToBasketView(View):
                     try:
                         inside_basket = InsideBasket.objects.get(product__id=id)
                         inside_basket.items = form.cleaned_data['items']
-                        print(inside_basket.items)
                         inside_basket.save()
                     except ObjectDoesNotExist:
                         InsideBasket.objects.create(
@@ -175,7 +172,6 @@ class AddProductToBasketView(View):
                     inside_baskets = InsideBasket.objects.filter(basket=basket)
                     basket.total_price = 0
                     for inside in inside_baskets:
-                        print(inside.items)
                         basket.total_price += inside.items * inside.product.price
                     basket.save()
                     return redirect('basket')

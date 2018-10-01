@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView, BasketView
 from yerba_mat.views import LoginView, LogoutView, ClientCreateView, AddProductToBasketView, ModifyInsideBasketView
@@ -12,6 +12,7 @@ from api.views import ProductView, ProductListView, WrongEndpointView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^getpaid/', include('getpaid.urls', namespace='getpaid', app_name='getpaid')),
     url(r'^index/$', IndexView.as_view(), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
