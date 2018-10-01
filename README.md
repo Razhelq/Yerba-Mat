@@ -2,7 +2,11 @@
 
 The concept of a Yerba Mate Store.
 
+<<<<<<< HEAD
 This project contains 2 applications. The website with Online shop and
+=======
+This project contains 2 applications. The website with Online shop and 
+>>>>>>> 87266c15a4162318ae7f6610ecd153a7499539a8
 REST API which allows to send and modify Products data in the database.
 
 The shop contains:
@@ -16,7 +20,10 @@ The shop contains:
 
 To do:
 - leaving and displaying reviews possibility
+<<<<<<< HEAD
 - django-getpaid Przelewy24 implementation
+=======
+>>>>>>> 87266c15a4162318ae7f6610ecd153a7499539a8
 
 ---
 
@@ -26,4 +33,8 @@ REST API contains:
 - every request and response saves in the logs.
 
 
+<<<<<<< HEAD
 As a front-end side I chose bootstrap 4 with my modifications.
+=======
+As a front-end side I chose bootstrap 4 with my modifications.
+>>>>>>> 87266c15a4162318ae7f6610ecd153a7499539a8
