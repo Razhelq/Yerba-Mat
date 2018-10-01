@@ -232,6 +232,12 @@ class OrderCreateView(View):
         return redirect('basket')
 
 
+class ReviewAddView(View):
+
+    def get(self, request):
+        pass
+
+
 # TODO
 
 class OrderToSendView(View):

@@ -12,7 +12,7 @@ from api.views import ProductView, ProductListView, WrongEndpointView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^getpaid/', include('getpaid.urls', namespace='getpaid', app_name='getpaid')),
+    # url(r'^getpaid/', include('getpaid.urls', namespace='getpaid')),
     url(r'^index/$', IndexView.as_view(), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),

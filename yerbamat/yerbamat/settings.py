@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'yerba_mat',
     'api',
-    'getpaid'
 ]
 
 MIDDLEWARE = [
