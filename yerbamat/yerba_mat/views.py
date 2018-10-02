@@ -69,12 +69,19 @@ class BasketView(View):
     def get(self, request):
         if request.user.is_authenticated:
             try:
+                # basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
+                # inside_baskets = InsideBasket.objects.filter(basket=basket)
                 basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
-                inside_baskets = InsideBasket.objects.filter(basket=basket)
-                return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
+                if request.session.get('basket') == basket.id:
+                    inside_baskets = InsideBasket.objects.filter(basket=basket)
+                    return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
+                else:
+                    del basket
+                    return render(request, 'basket_view.html')
             except ObjectDoesNotExist:
                 return render(request, 'basket_view.html')
         return redirect('login')
+
 
 class LoginView(View):
 
@@ -152,6 +159,7 @@ class AddProductToBasketView(View):
                     basket.total_price = 0
                     for inside in inside_baskets:
                         basket.total_price += inside.items * inside.product.price
+                    request.session['basket'] = basket.id
                     basket.save()
                     return redirect('basket')
                 except ObjectDoesNotExist:
@@ -173,6 +181,7 @@ class AddProductToBasketView(View):
                     basket.total_price = 0
                     for inside in inside_baskets:
                         basket.total_price += inside.items * inside.product.price
+                    request.session['basket'] = basket.id
                     basket.save()
                     return redirect('basket')
             return redirect('product-details', id=id)
