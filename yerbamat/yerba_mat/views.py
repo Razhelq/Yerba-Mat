@@ -10,6 +10,14 @@ from yerba_mat.forms import CategoryForm, ProductForm, ProductForm2, LoginForm, 
 class IndexView(View):
 
     def get(self, request):
+        try:
+            basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
+            # inside_baskets = InsideBasket.objects.filter(basket=basket)
+            if request.session.get('basket') != basket.id:
+                basket.delete()
+                # inside_baskets.delete()
+        except ObjectDoesNotExist:
+            pass
         return render(request, 'index.html')
 
 
@@ -55,7 +63,6 @@ class ProductView(View):
         products = Product.objects.all()
         return render(request, 'products_view.html', {'products': products})
 
-
 class ProductDetailsView(View):
 
     def get(self, request, id):
@@ -69,15 +76,14 @@ class BasketView(View):
     def get(self, request):
         if request.user.is_authenticated:
             try:
-                # basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
-                # inside_baskets = InsideBasket.objects.filter(basket=basket)
                 basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
-                if request.session.get('basket') == basket.id:
-                    inside_baskets = InsideBasket.objects.filter(basket=basket)
-                    return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
-                else:
-                    del basket
-                    return render(request, 'basket_view.html')
+                inside_baskets = InsideBasket.objects.filter(basket=basket)
+                # if request.session.get('basket') == basket.id:
+                return render(request, 'basket_view.html', {'basket': basket, 'inside_baskets': inside_baskets})
+                # else:
+                #     basket.delete()
+                #     inside_baskets.delete()
+                #     return render(request, 'basket_view.html')
             except ObjectDoesNotExist:
                 return render(request, 'basket_view.html')
         return redirect('login')
@@ -163,7 +169,7 @@ class AddProductToBasketView(View):
                     basket.save()
                     return redirect('basket')
                 except ObjectDoesNotExist:
-                    Basket.objects.create(
+                    basket = Basket.objects.create(
                         person=Client.objects.get(user__username=request.user)
                     )
                     try:
@@ -176,7 +182,7 @@ class AddProductToBasketView(View):
                             product=Product.objects.get(id=id),
                             items=form.cleaned_data['items']
                         )
-                    basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
+                    # basket = Basket.objects.get(person=Client.objects.get(user__username=request.user))
                     inside_baskets = InsideBasket.objects.filter(basket=basket)
                     basket.total_price = 0
                     for inside in inside_baskets:

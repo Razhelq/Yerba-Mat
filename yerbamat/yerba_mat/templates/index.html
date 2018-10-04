@@ -51,9 +51,6 @@
                         <a href="{% url 'index' %}">Sklep</a>
                     </li>
                     <li>
-                        <a href="{% url 'basket' %}">Koszyk</a>
-                    </li>
-                    <li>
                         <a href="#">O nas</a>
                     </li>
                     <li>
@@ -73,6 +70,13 @@
                     {% endif %}
                     <li>
                         <a href="{% url 'client-create' %}">Stwórz konto</a>
+                    </li>
+
+                    <!--<li>-->
+                        <!--<a href="#">&nbsp&nbsp&nbsp&nbsp&nbsp</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a href="{% url 'basket' %}">Koszyk ( {{ bas }} zł )</a>
                     </li>
                 </ul>
             </div>
