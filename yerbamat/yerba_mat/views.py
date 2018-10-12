@@ -69,8 +69,14 @@ class ProductDetailsView(View):
     def get(self, request, id):
         form = BasketForm()
         form2 = ReviewForm()
+        reviews = Review.objects.filter(product__id=id)
         product = Product.objects.get(id=id)
-        return render(request, 'product_details.html', {'product': product, 'form': form, 'form2': form2})
+        return render(request, 'product_details.html', {
+            'product': product,
+            'form': form,
+            'form2': form2,
+            'reviews': reviews
+        })
 
 
 class BasketView(View):
