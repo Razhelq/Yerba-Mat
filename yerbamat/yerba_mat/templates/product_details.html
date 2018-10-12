@@ -38,7 +38,13 @@
                     <div class="text-right">
                         <a class="btn btn-success">Leave a Review</a>
                     </div>
-
+                    <div class="review" style="display: none">
+                        <form action="{% url 'review-add' product.id %}" method="POST">
+                            {% csrf_token %}
+                            {{ form2.as_p }}
+                            <button type="submit">Dodaj</button>
+                        </form>
+                    </div>
                     <hr>
 
                     <div class="row">
