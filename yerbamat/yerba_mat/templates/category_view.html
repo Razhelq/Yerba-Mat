@@ -8,7 +8,7 @@
             <div class="col-md-9">
                 <h3><strong><center>{{ category.name }}</center></strong></h3>
                 <div class="thumbnail">
-                    {% if category.id == 1  or category.id == 2 %}
+                    {% if category.id == 1  or category.id == 2  or category.id == 3 %}
                         {% for product in products %}
                         <div class="col-lg-4 col-md-6 mb-4">
                           <div class="card h-100">
@@ -17,7 +17,7 @@
                               <h4 class="card-title">
                                 <a href="{% url 'product-details' product.id %}">{{ product.name }}</a>
                               </h4>
-                              <h5>{{ product.price }}</h5>
+                              <h5>{{ product.price }} zł</h5>
                             </div>
                             <div class="card-footer">
                               <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>

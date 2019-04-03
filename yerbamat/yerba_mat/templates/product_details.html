@@ -36,11 +36,17 @@
                 <div class="well">
 
                     <div class="text-right">
-                        <a class="btn btn-success">Leave a Review</a>
+                        <a class="btn btn-success">Zostaw komentarz</a>
                     </div>
-
+                    <div class="review" style="display: none">
+                        <form action="{% url 'review-add' product.id %}" method="POST">
+                            {% csrf_token %}
+                            {{ form2.as_p }}
+                            <button type="submit">Dodaj</button>
+                        </form>
+                    </div>
                     <hr>
-
+                    {% for review in reviews %}
                     <div class="row">
                         <div class="col-md-12">
                             <span class="glyphicon glyphicon-star"></span>
@@ -49,40 +55,16 @@
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
                             Anonymous
-                            <span class="pull-right">10 days ago</span>
-                            <p>This product was great in terms of quality. I would definitely buy another!</p>
+                            <span class="pull-right">{{ review.creation_date }}</span>
+                            <p>{{ review.content }}</p>
                         </div>
                     </div>
 
                     <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">12 days ago</span>
-                            <p>I've alredy ordered another one!</p>
-                        </div>
-                    </div>
+                    {% endfor %}
 
                     <hr>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">15 days ago</span>
-                            <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                        </div>
-                    </div>
 
                 </div>
 

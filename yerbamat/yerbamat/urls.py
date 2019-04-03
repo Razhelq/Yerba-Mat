@@ -1,17 +1,18 @@
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from yerba_mat.views import IndexView, CategoryView, CategoryAddView, ProductAddView, ProductDetailsView, BasketView
 from yerba_mat.views import LoginView, LogoutView, ClientCreateView, AddProductToBasketView, ModifyInsideBasketView
 from yerba_mat.views import OrderCreateView, OrderToSendView, CategoryDeleteView, ProductDeleteView
-from yerba_mat.views import CategoryModifyView, ProductModifyView
+from yerba_mat.views import CategoryModifyView, ProductModifyView, ReviewAddView
 from api.views import ProductView, ProductListView, WrongEndpointView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # url(r'^getpaid/', include('getpaid.urls', namespace='getpaid')),
     url(r'^index/$', IndexView.as_view(), name='index'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^product_delete/$', ProductDeleteView.as_view(), name='product-del'),
     url(r'^category_modify/$', CategoryModifyView.as_view(), name='category-mod'),
     url(r'^product_modify/$', ProductModifyView.as_view(), name='product-mod'),
+    url(r'^review_add/(?P<id>(\d)+)/$', ReviewAddView.as_view(), name='review-add'),
     url(r'^api/product/$', ProductListView.as_view(), name='product-list'),
     url(r'^api/product/(?P<id>[0-9]+)/$', ProductView.as_view(), name='product'),
     url(r'^api/.*', WrongEndpointView.as_view(), name='wrong-endpoint'),

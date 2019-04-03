@@ -2,8 +2,7 @@
 
 The concept of a Yerba Mate Store.
 
-This project contains 2 applications. The website with Online shop and 
-REST API which allows to send and modify Products data in the database.
+This project contains 2 applications. The website with Online shop and REST API which allows to send and modify Products data in the database.
 
 The shop contains:
 - a view of all products
@@ -13,11 +12,6 @@ The shop contains:
 - admin models to manage data from the admin level
 - views to manage store content from the website level - allowed only for users with required permissions
 
-
-To do:
-- leaving and displaying reviews possibility
-
----
 
 REST API contains:
 - methods to handle HTTP requests to get products details or manage products content from database.

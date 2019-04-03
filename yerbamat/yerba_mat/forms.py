@@ -55,3 +55,11 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Client
         exclude = ('user', )
+
+
+class ReviewForm(forms.Form):
+    content = forms.CharField(
+        label='Treść',
+        max_length=128,
+        widget=forms.Textarea(attrs={'width': "100%", 'cols': "50", 'rows': "5"})
+    )
